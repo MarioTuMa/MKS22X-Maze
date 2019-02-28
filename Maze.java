@@ -18,10 +18,48 @@ public class Maze{
       3. When the file is not found OR the file is invalid (not exactly 1 E and 1 S) then:
          throw a FileNotFoundException or IllegalStateException
     */
-    public Maze(String filename) throws FileNotFoundException{
-        FileReader f = new FileReader(filename);
-        System.out.println(f);
+    public Maze(String filename) throws FileNotFoundException {
+        //instead of a try/catch, you can throw the FileNotFoundException.
+        //This is generally bad behavior
+        try {
+          File text = new File(filename);
+          // can be a path like: "/full/path/to/file.txt" or "../data/file.txt"
 
+          //inf stands for the input file
+          Scanner inf = new Scanner(text);
+          int counter = 0;
+          int width = 0;
+          while(inf.hasNextLine()){
+              String line = inf.nextLine();
+              width = line.length();
+              counter++;
+          }
+
+          maze = new char[counter][width];
+          counter = 0;
+          Scanner inf1 = new Scanner(text);
+
+          while(inf1.hasNextLine()){
+              String line = inf1.nextLine();
+              for(int i = 0; i < line.length();i++){
+                maze[counter][i]= line.charAt(i);
+              }
+              counter++;
+          }
+        }
+        catch (FileNotFoundException ex){
+          System.out.println("hi");
+        }
+    }
+    public String toString(){
+      String to_return = "";
+      for(int i = 0; i < maze.length; i ++){
+        for(int j = 0; j < maze[0].length; j ++){
+            to_return += maze[i][j];
+        }
+        to_return = to_return+"\n";
+      }
+      return to_return;
     }
 
     private void wait(int millis){
@@ -82,7 +120,13 @@ public class Maze{
         return -1; //so it compiles
     }
     public static void main(String[] args){
-      Maze nm = new Maze("data.dat");
+      try{
+        Maze nm = new Maze("data.dat");
+        System.out.println(nm.toString());
+      }catch(FileNotFoundException e){
+        System.out.println("file not found");
+      }
+
     }
 
 }
