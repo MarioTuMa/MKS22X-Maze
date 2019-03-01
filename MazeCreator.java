@@ -1,6 +1,6 @@
 import java.util.*;
 import java.io.*;
-public class Maze{
+public class MazeCreator{
 
     private char[][]maze;
     private boolean animate;//false by default
@@ -18,39 +18,12 @@ public class Maze{
       3. When the file is not found OR the file is invalid (not exactly 1 E and 1 S) then:
          throw a FileNotFoundException or IllegalStateException
     */
-    public Maze(String filename) throws FileNotFoundException {
+    public MazeCreator(String filename) throws FileNotFoundException {
         //instead of a try/catch, you can throw the FileNotFoundException.
         //This is generally bad behavior
-        animate = true;
-        try {
-          File text = new File(filename);
-          // can be a path like: "/full/path/to/file.txt" or "../data/file.txt"
+        File f = new File();
 
-          //inf stands for the input file
-          Scanner inf = new Scanner(text);
-          int counter = 0;
-          int width = 0;
-          while(inf.hasNextLine()){
-              String line = inf.nextLine();
-              width = line.length();
-              counter++;
-          }
-
-          maze = new char[counter][width];
-          counter = 0;
-          Scanner inf1 = new Scanner(text);
-
-          while(inf1.hasNextLine()){
-              String line = inf1.nextLine();
-              for(int i = 0; i < line.length();i++){
-                maze[counter][i]= line.charAt(i);
-              }
-              counter++;
-          }
-        }
-        catch (FileNotFoundException ex){
-          System.out.println("hi");
-        }
+        System.out.println(f.createNewFile("hello.dat"));
     }
     public String toString(){
       String to_return = "";
@@ -177,9 +150,12 @@ public class Maze{
     }
     public static void main(String[] args){
       try{
-        Maze nm = new Maze("data.dat");
+        MazeCreator nm = new MazeCreator("data.dat");
         System.out.println(nm.toString());
+        Random r = new Random();
+
         nm.solve();
+        System.out.println(r.nextInt()%100);
       }catch(FileNotFoundException e){
         System.out.println("file not found");
       }
