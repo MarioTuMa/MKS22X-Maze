@@ -21,7 +21,7 @@ public class Maze{
     public Maze(String filename) throws FileNotFoundException {
         //instead of a try/catch, you can throw the FileNotFoundException.
         //This is generally bad behavior
-        animate = true;
+        //animate = true;
         try {
           File text = new File(filename);
           // can be a path like: "/full/path/to/file.txt" or "../data/file.txt"
@@ -49,7 +49,7 @@ public class Maze{
           }
         }
         catch (FileNotFoundException ex){
-          System.out.println("hi");
+          System.out.println("File not found");
         }
     }
     public String toString(){
@@ -175,15 +175,6 @@ public class Maze{
         //COMPLETE SOLVE
         return -1; //so it compiles
     }
-    public static void main(String[] args){
-      try{
-        Maze nm = new Maze("data.dat");
-        System.out.println(nm.toString());
-        nm.solve();
-      }catch(FileNotFoundException e){
-        System.out.println("file not found");
-      }
-
-    }
+    
 
 }
